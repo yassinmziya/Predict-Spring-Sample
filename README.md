@@ -5,8 +5,8 @@ This project has not yet been approved by Pinterest. As such, **users must be ad
 As a result of not yet being approved, each unique authenticated user is **limited to 10 api calls per hour**.
 
 ## Xcode
-To setup the project, run:
+To setup the project, make sure to have the cocoapods cli installed. Open the terminal and run:
 ```bash
 pod init
 ```
-Then open the ***.xcworkspace*** file on Xcode, build, and run.
+to initialize project dependencies. Then open the ***.xcworkspace*** file on Xcode, build, and run.
