@@ -9,4 +9,4 @@ To setup the project, run:
 ```bash
 pod init
 ```
-The open the ***.xcworkspace*** file on Xcode, build, and run.
+Then open the ***.xcworkspace*** file on Xcode, build, and run.
