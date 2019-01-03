@@ -31,6 +31,8 @@
 		1C2BF6D921CB177A0079416C /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C2BF6D821CB177A0079416C /* Constants.swift */; };
 		1C2BF6DB21CB2C1B0079416C /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C2BF6DA21CB2C1B0079416C /* HomeViewController.swift */; };
 		1C6A818C21D5C74A002602CD /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6A818B21D5C74A002602CD /* LoadingView.swift */; };
+		1CDA825221DDD23E0088599B /* UsersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CDA825121DDD23E0088599B /* UsersViewController.swift */; };
+		1CDA825421DDDDF60088599B /* UserPreviewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CDA825321DDDDF60088599B /* UserPreviewCell.swift */; };
 		1CE3ED3921D302A0004FE586 /* NoPinsEmptyStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE3ED3821D302A0004FE586 /* NoPinsEmptyStateView.swift */; };
 		1CE3ED3F21D53609004FE586 /* MetadataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE3ED3E21D53609004FE586 /* MetadataView.swift */; };
 		1CE3ED4121D55894004FE586 /* NoSearchResultsEmptyStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE3ED4021D55894004FE586 /* NoSearchResultsEmptyStateView.swift */; };
@@ -65,6 +67,8 @@
 		1C2BF6D821CB177A0079416C /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		1C2BF6DA21CB2C1B0079416C /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		1C6A818B21D5C74A002602CD /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
+		1CDA825121DDD23E0088599B /* UsersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersViewController.swift; sourceTree = "<group>"; };
+		1CDA825321DDDDF60088599B /* UserPreviewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPreviewCell.swift; sourceTree = "<group>"; };
 		1CE3ED3821D302A0004FE586 /* NoPinsEmptyStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoPinsEmptyStateView.swift; sourceTree = "<group>"; };
 		1CE3ED3E21D53609004FE586 /* MetadataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetadataView.swift; sourceTree = "<group>"; };
 		1CE3ED4021D55894004FE586 /* NoSearchResultsEmptyStateView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoSearchResultsEmptyStateView.swift; sourceTree = "<group>"; };
@@ -124,6 +128,7 @@
 				1C224EE721CDEAC00037F616 /* BoardPreviewCell.swift */,
 				1C224EE921CDEAD90037F616 /* PinPreviewCell.swift */,
 				1C224EF321D144D60037F616 /* InterestCell.swift */,
+				1CDA825321DDDDF60088599B /* UserPreviewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -173,6 +178,7 @@
 				1C224EEB21CDEB2B0037F616 /* PinViewController.swift */,
 				1C224EED21CDEB360037F616 /* BoardViewController.swift */,
 				1C224EF121D13FBB0037F616 /* SearchViewController.swift */,
+				1CDA825121DDD23E0088599B /* UsersViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -338,6 +344,7 @@
 				1C224EF221D13FBB0037F616 /* SearchViewController.swift in Sources */,
 				1C224EEE21CDEB360037F616 /* BoardViewController.swift in Sources */,
 				1CE3ED3921D302A0004FE586 /* NoPinsEmptyStateView.swift in Sources */,
+				1CDA825221DDD23E0088599B /* UsersViewController.swift in Sources */,
 				1C2BF6BE21CB0A610079416C /* AppDelegate.swift in Sources */,
 				1C224ECB21CD43190037F616 /* ProfileViewController.swift in Sources */,
 				1C2BF6DB21CB2C1B0079416C /* HomeViewController.swift in Sources */,
@@ -346,6 +353,7 @@
 				1C224EE821CDEAC00037F616 /* BoardPreviewCell.swift in Sources */,
 				1C2BF6D921CB177A0079416C /* Constants.swift in Sources */,
 				1C224EC521CC62AC0037F616 /* Pin.swift in Sources */,
+				1CDA825421DDDDF60088599B /* UserPreviewCell.swift in Sources */,
 				1C224EC721CC62F90037F616 /* Board.swift in Sources */,
 				1CE3ED4121D55894004FE586 /* NoSearchResultsEmptyStateView.swift in Sources */,
 			);

@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol ProfileUserCountsCellDelegate {
+    func userCountsCellTapped(index: Int)
+}
+
 enum UserCountLabel: String {
     case following = "following"
     case followers = "followers"
@@ -18,6 +22,7 @@ enum UserCountLabel: String {
 class ProfileUserCountsCell: UICollectionViewCell {
     
     static let identifier = "profileUserCountsCell"
+    var delegate: ProfileUserCountsCellDelegate!
     
     var collectionView: UICollectionView!
     let userCountLabels: [UserCountLabel] = [.following, .followers, .pins, .boards]
@@ -55,7 +60,12 @@ class ProfileUserCountsCell: UICollectionViewCell {
     }
 }
 
-extension ProfileUserCountsCell: UICollectionViewDataSource {
+extension ProfileUserCountsCell: UICollectionViewDataSource, UICollectionViewDelegate {
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        delegate.userCountsCellTapped(index: indexPath.row)
+    }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: UserMetadataCell.identifier, for: indexPath) as! UserMetadataCell

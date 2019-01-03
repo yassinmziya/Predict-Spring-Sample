@@ -14,6 +14,7 @@ class ProfileUserDataCell: UICollectionViewCell {
     static let identifier = "profileUserDataCell"
     
     var logoutButton: UIButton!
+    var backButton: UIButton!
     var profileImageView: UIImageView!
     var nameLabel: UILabel!
     
@@ -26,6 +27,11 @@ class ProfileUserDataCell: UICollectionViewCell {
         logoutButton.setImage(UIImage(named: "logout-icon"), for: .normal)
         logoutButton.addTarget(self, action: #selector(logout), for: .touchUpInside)
         contentView.addSubview(logoutButton)
+        
+        backButton = UIButton()
+        backButton.setImage(UIImage(named: "left-arrow"), for: .normal)
+        backButton.isHidden = true
+        contentView.addSubview(backButton)
         
         profileImageView = UIImageView()
         profileImageView.layer.cornerRadius = CGFloat(profileImageHeight/2)
@@ -51,6 +57,11 @@ class ProfileUserDataCell: UICollectionViewCell {
         logoutButton.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(20)
             make.trailing.equalToSuperview().offset(-20)
+        }
+        
+        backButton.snp.makeConstraints { make in
+            make.centerY.equalTo(logoutButton)
+            make.leading.equalToSuperview().offset(20)
         }
         
         profileImageView.snp.makeConstraints { make in

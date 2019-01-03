@@ -185,6 +185,34 @@ class NetworkManager {
         }
     }
     
+    func getLoggedInUserFollows(getFollowers: Bool, pagingData: PagingData?, completion: @escaping ([User], PagingData?) -> Void) {
+        guard let accessToken = accessToken else {
+            print("No Access Token")
+            return
+        }
+        
+        let reqUrl = pagingData?.next ?? "\(baseUrl)/me/\( getFollowers ? "followers" : "following/users" )/?access_token=\(accessToken)&fields=first_name%2Cid%2Clast_name%2Curl%2Ccounts%2Cimage"
+        
+        Alamofire.request(reqUrl).validate().responseData { response in
+            switch response.result {
+            case .success(let data):
+                let decoder = JSONDecoder()
+                if let followData = try? decoder.decode(UserFollowsResponse.self, from: data) {
+                    if let _ = followData.page.next {
+                        completion(followData.data, followData.page)
+                    } else {
+                        completion(followData.data, nil)
+                    }
+                } else {
+                    print("could not decode follow data")
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+                completion([], nil)
+            }
+        }
+    }
+    
     // board metods
     func getPinsForBoard(withId id: String, completion: @escaping ([Pin]) -> Void) {
         guard let accessToken = accessToken else {

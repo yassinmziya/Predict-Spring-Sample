@@ -18,16 +18,14 @@ enum ProfileVCSections {
 
 class ProfileViewController: UIViewController {
 
-    let sections: [ProfileVCSections] = [.userData, .userCounts, .userContent]
+    var isLoggedInUser: Bool = true
+    
+    var sections: [ProfileVCSections]!
     var mainCollectionView: UICollectionView!
     var refreshControl: UIRefreshControl!
     var loadingView: LoadingView!
     
-    var user: User? = nil {
-        didSet {
-            mainCollectionView.reloadData()
-        }
-    }
+    var user: User? = nil
     var boards: [Board] = [] {
         didSet {
             mainCollectionView.reloadData()
@@ -36,6 +34,8 @@ class ProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        sections = isLoggedInUser ? [.userData, .userCounts, .userContent] : [.userData, .userCounts]
         
         let mainCVLayout = UICollectionViewFlowLayout()
         mainCVLayout.scrollDirection = .vertical
@@ -47,18 +47,20 @@ class ProfileViewController: UIViewController {
         mainCollectionView.register(ProfileUserCountsCell.self, forCellWithReuseIdentifier: ProfileUserCountsCell.identifier)
         mainCollectionView.register(BoardPreviewCell.self, forCellWithReuseIdentifier: BoardPreviewCell.identifier)
         mainCollectionView.register(NoBoardsEmptyStateCell.self, forCellWithReuseIdentifier: NoBoardsEmptyStateCell.identifier)
-        view.addSubview(mainCollectionView)
         
-        refreshControl = UIRefreshControl()
-        mainCollectionView.refreshControl = refreshControl
-        refreshControl.addTarget(self, action: #selector(getInitData), for: .valueChanged)
+        if isLoggedInUser {
+            refreshControl = UIRefreshControl()
+            mainCollectionView.refreshControl = refreshControl
+            refreshControl.addTarget(self, action: #selector(getInitData), for: .valueChanged)
+        }
         view.addSubview(mainCollectionView)
         
         loadingView = LoadingView()
         loadingView.backgroundColor = .white
+        loadingView.isHidden = !isLoggedInUser
         view.addSubview(loadingView)
         
-        getInitData()
+        if isLoggedInUser { getInitData() } // because if not, data has already been loaded in usersVC
         setupConstraints()
     }
     
@@ -79,8 +81,8 @@ class ProfileViewController: UIViewController {
             // get boards
             NetworkManager.sharedInstantce.getLoggedInUserBoards { boards in
                 DispatchQueue.main.async {
-                    self.boards = boards
                     self.user = user
+                    self.boards = boards
                     self.loadingView.removeFromSuperview()
                 }
             }
@@ -94,6 +96,10 @@ class ProfileViewController: UIViewController {
                 self.boards = boards
             }
         }
+    }
+    
+    @objc func backButtonPressed() {
+        navigationController?.popViewController(animated: true)
     }
 
 }
@@ -130,6 +136,9 @@ extension ProfileViewController: UICollectionViewDataSource, UICollectionViewDel
         switch sections[indexPath.section] {
         case .userData:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProfileUserDataCell.identifier, for: indexPath) as! ProfileUserDataCell
+            cell.logoutButton.isHidden = !isLoggedInUser
+            cell.backButton.isHidden = isLoggedInUser
+            cell.backButton.addTarget(self, action: #selector(backButtonPressed), for: .touchUpInside)
             if let user = user {
                 let imageResource = ImageResource(downloadURL: URL(string: user.image["60x60"]!.url)!, cacheKey: user.image["60x60"]!.url)
                 cell.profileImageView.kf.setImage(with: imageResource)
@@ -139,6 +148,7 @@ extension ProfileViewController: UICollectionViewDataSource, UICollectionViewDel
             return cell
         case .userCounts:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProfileUserCountsCell.identifier, for: indexPath) as! ProfileUserCountsCell
+            cell.delegate = self
             if let user = user {
                 cell.userCounts = user.counts
             }
@@ -154,7 +164,6 @@ extension ProfileViewController: UICollectionViewDataSource, UICollectionViewDel
             let board = boards[indexPath.row]
             let imageResource = ImageResource(downloadURL: URL(string: board.image["60x60"]!.url)!, cacheKey: board.image["60x60"]!.url)
             cell.imageView.kf.setImage(with: imageResource)
-            cell.boardNameLabel.text = board.name
             // cell.boardCountsLabel.text = String(board.counts.pins) + " pins"
             cell.setNeedsUpdateConstraints()
             return cell
@@ -173,7 +182,6 @@ extension ProfileViewController: UICollectionViewDelegateFlowLayout {
         case .userCounts:
            return CGSize(width: view.frame.width, height: 70)
         case .userContent:
-            
             return !boards.isEmpty ? CGSize(width: view.frame.width - 30, height: view.frame.height/4) : CGSize(width: view.frame.width, height: view.frame.height - (250 + 80))
         }
     }
@@ -187,4 +195,14 @@ extension ProfileViewController: UICollectionViewDelegateFlowLayout {
         }
     }
     
+}
+
+extension ProfileViewController: ProfileUserCountsCellDelegate {
+    func userCountsCellTapped(index: Int) {
+        if !isLoggedInUser || index > 1 { return }
+        
+        let userVC = UsersViewController()
+        userVC.followers = index == 1
+        navigationController?.pushViewController(userVC, animated: true)
+    }
 }

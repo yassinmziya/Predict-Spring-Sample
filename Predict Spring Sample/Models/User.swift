@@ -42,3 +42,8 @@ struct Interest: Codable {
     var id: String
     var name: String
 }
+
+struct UserFollowsResponse: Codable {
+    var data: [User]
+    var page: PagingData
+}
